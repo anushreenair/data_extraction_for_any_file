@@ -1,0 +1,51 @@
+========================================================================
+HM Revenue & Customs       P60 END OF YEAR CERTIFICATE     TAX YEAR TO
+                           Printed Copy of an eP60         5 APRIL 2024
+========================================================================
+
+EMPLOYEE DETAILS
+------------------------------------------------------------------------
+Surname:                 SMITH
+Forenames / Initials:    JOHN A.
+National Insurance No:   QQ 12 34 56 A
+Works / Payroll Number:  EMP-992014
+
+PAY AND INCOME TAX DETAILS
+------------------------------------------------------------------------
+                                         Pay (£)          Tax Deducted (£)
+In Previous Employment(s):                0.00               0.00
+In This Employment:                   42500.50            6120.20
+------------------------------------------------------------------------
+TOTAL FOR THE YEAR                    42500.50            6120.20
+
+Final Tax Code:                       1257L
+
+NATIONAL INSURANCE CONTRIBUTIONS IN THIS EMPLOYMENT
+------------------------------------------------------------------------
+NIC Table Letter:                     A
+Earnings at the LEL:                  6396.00
+Earnings LEL to PT:                   2704.00
+Earnings PT to UEL:                   33400.50
+Employee's Contributions Due:         3412.32
+
+STATUTORY PAYMENTS INCLUDED IN PAY ABOVE
+------------------------------------------------------------------------
+Statutory Maternity Pay (SMP):        0.00
+Statutory Paternity Pay (SPP):        0.00
+Statutory Adoption Pay (SAP):         0.00
+Shared Parental Pay (ShPP):           0.00
+
+STUDENT LOAN DEDUCTIONS
+------------------------------------------------------------------------
+Student Loan Deductions (Plan 1/2/4): 450.00
+Postgraduate Loan Deductions:         0.00
+
+EMPLOYER DETAILS
+------------------------------------------------------------------------
+Employer Name:                        ACME INDUSTRIES UK LTD
+Employer Address:                     102 BUSINESS PARK, LONDON, EC1A 1BB
+Employer PAYE Reference:              123/AB4567
+========================================================================
+To the Employee: Please keep this certificate in a safe place. You will 
+need it to fill in a tax return, or to claim tax credits/benefits.
+========================================================================
