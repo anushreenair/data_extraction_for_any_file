@@ -1,5 +1,13 @@
 # How to run the data extractor
 
+## What this README is for
+
+This is the project instruction file. GitHub displays it automatically on the
+front page of the repository so that your boss, teammates, or future you can
+understand what the extractor does and run it without reading the Python code.
+It explains how to process sample files, new folders, or one individual file,
+and where to find the JSON results.
+
 ## 1. Open the terminal in VS Code
 
 In VS Code, select **Terminal → New Terminal**. A terminal panel opens at the
