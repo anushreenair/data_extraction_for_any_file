@@ -51,10 +51,15 @@ YTD_FIELDS = {
 
 LABEL_FIELDS = {
     "Surname": "surname",
+    "Sumame": "surname",
     "Forenames / Initials": "forenames",
+    "Forenames": "forenames",
     "National Insurance No": "national_insurance_number",
     "National Insurance Number": "national_insurance_number",
+    "NI No": "national_insurance_number",
+    "NINo": "national_insurance_number",
     "Works / Payroll Number": "payroll_number",
+    "Works/Payroll Number": "payroll_number",
     "Final Tax Code": "tax_code",
     "NIC Table Letter": "nic_table_letter",
     "Employer Name": "employer_name",
@@ -110,7 +115,13 @@ def _ocr_image(path: Path) -> str:
     ocr_module = _require("pytesseract", "python3 -m pip install pillow pytesseract")
     try:
         with image_module.open(path) as image:
-            return ocr_module.image_to_string(image)
+            text = ocr_module.image_to_string(image, config="--psm 4")
+            if "P60" not in text.upper():
+                return text
+            width, height = image.size
+            employee_panel = image.crop((width * 0.17, height * 0.18, width * 0.41, height * 0.86))
+            employee_text = ocr_module.image_to_string(employee_panel.resize((employee_panel.width * 3, employee_panel.height * 3)), config="--psm 6")
+            return f"{employee_text}\n{text}"
     except ocr_module.TesseractNotFoundError as error:
         raise RuntimeError("Tesseract is not installed. On macOS run: brew install tesseract") from error
 
@@ -151,7 +162,7 @@ def _normalise_label(label: str) -> str:
 
 
 def _text_value(text: str, label: str) -> str | None:
-    match = re.search(rf"(?m)^\s*{re.escape(label)}:\s*(?:\n\s*)?(.+?)\s*$", text)
+    match = re.search(rf"(?m)^[^\w\n]*{re.escape(label)}\s*[:.]\s*(?:\n\s*)?(.+?)\s*$", text)
     return match.group(1).strip() if match else None
 
 
@@ -162,6 +173,12 @@ def _money(value: str | None) -> float | None:
     return float(cleaned) if re.fullmatch(r"-?\d+(?:\.\d{1,2})?", cleaned) else None
 
 
+def _national_insurance_number(value: str) -> str:
+    compact = re.sub(r"\s+", "", value.upper())
+    match = re.search(r"([A-Z]{2})(\d{2})(\d{2})(\d{2})([A-Z])", compact)
+    return " ".join(match.groups()) if match else value
+
+
 def extract_fields(text: str) -> dict[str, Any]:
     """Return only values that appear in the source text; unknown values are null."""
     fields: dict[str, Any] = dict.fromkeys(FIELD_NAMES)
@@ -169,8 +186,11 @@ def extract_fields(text: str) -> dict[str, Any]:
 
     for label, key in LABEL_FIELDS.items():
         value = _text_value(text, label)
-        if value is not None:
-            fields[key] = _money(value) if key in MONEY_FIELDS else value
+        if value is not None and fields[key] is None:
+            if key == "national_insurance_number":
+                fields[key] = _national_insurance_number(value)
+            else:
+                fields[key] = _money(value) if key in MONEY_FIELDS else value
 
     for source_label, (pay_key, tax_key) in PAY_ROWS.items():
         match = re.search(

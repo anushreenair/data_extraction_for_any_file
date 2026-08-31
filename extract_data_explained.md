@@ -244,3 +244,18 @@ repeated P60 and payslip mappings so the extraction loop can reuse them.
 
 The remaining longer areas are purposeful: PDF/DOCX/image readers need different
 libraries, and the P60/payslip patterns handle real differences in their layouts.
+
+## Later OCR improvement: photographed P60 forms
+
+The image OCR path now uses Tesseract page-layout mode `4`, which is better at
+reading a photographed form whose text appears in several positioned columns.
+After it recognises the P60 heading, it makes one additional OCR pass over the
+left employee-details panel. That small panel returns clean values for surname,
+forenames, National Insurance number, and payroll number; the full-page pass
+continues to supply employer and tax information.
+
+The parser also accepts common OCR variations such as `Sumame`, `NINo`, and a
+period in place of a colon after `Works/Payroll Number`. It normalises a valid
+National Insurance number such as `AB123456C` to the easier-to-read JSON form
+`AB 12 34 56 C`. These rules are deliberately narrow, so the script does not
+invent values when OCR is uncertain.
